@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Miau Mágico: Adivinhe o Número Certo</title>
+    <style>
+        body {
+            background-color: #e6e6fa; /* Define o fundo em tom de lavanda claro */
+            background-image: url(./imagens/two_beautiful_kittens_are_sleeping_covered_with_white_towel_4k_hd_kittens-1366x768.jpg);
+            background-size: fill; /* Ajusta o tamanho das imagens de fundo para cobrir toda a tela */
+        }
+
+        /* Estilização adicional do jogo */
+        h1, h2 {
+            margin: 0 auto;
+            width: max-content;
+            text-align: center;
+            background-color: pink;
+        }
+
+        p, input, button {
+            display: block;
+            margin: 0 auto;
+            width: 300px;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            width: max-content;
+            text-align: center;
+            font-size: 25px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Miau Mágico</h1>
+
+    <h2>Adivinhe o número entre 1 e 100:</h2>
+
+    <input type="number" id="chute"> <!-- Insere o número -->
+    
+    <button onclick="verificarChute()">Chutar</button> <!-- trigger do jogo -->
+    
+    <p id="resultado"></p>  <!-- resultado -->
+
+    <script>
+
+        // Sorteio do Número
+        let numeroDoSorteio = Math.round(Math.random() * 100); // Define o intervalo do sorteio entre 0 e 10
+        
+        //Numero de tentativas do usuário
+        let numeroDeTetativas = 5;
+
+
+        //Número da rodada
+        let numeroDaRodada = 1; //Contagem de rodadas
+        
+        // Função para verificar se o chute é igual ao sorteio
+        function verificarChute() {
+            
+            console.log(numeroDoSorteio);
+            
+            //Capta o chute do usuário
+            let chute = parseInt(document.getElementById("chute").value);            
+                
+            //Inicio do Jogo
+            if (numeroDaRodada <= numeroDeTetativas){
+
+                if (chute === numeroDoSorteio) { //Chute certo
+                    document.getElementById("chute").disabled = true; // Desativa o campo de chute após acertar
+                    
+                    if (numeroDaRodada == 1) {
+                    document.getElementById("resultado").innerHTML = "Parabéns! Você acertou de primeira"; 
+                    } else {
+                        document.getElementById("resultado").innerHTML = "Parabéns! Você acertou em " + numeroDaRodada + " tentativas!";
+                    }
+
+                } else if (chute < numeroDoSorteio) { //Chute errado
+                    if (numeroDaRodada < numeroDeTetativas) {
+                        document.getElementById("resultado").innerHTML = "Tente novamente! O número é maior.";
+                    } else {
+                        document.getElementById("resultado").innerHTML = `Fim de jogo! Suas ${numeroDeTetativas} chances acabaram. O número correto era: ${numeroDoSorteio}.`;
+                        document.getElementById("chute").disabled = true; // Desativa o campo de chute após atingir o numero de tentativas
+                    }
+                } else if (chute > numeroDoSorteio){
+                    if (numeroDaRodada < numeroDeTetativas) {
+                        document.getElementById("resultado").innerHTML = "Tente novamente! O número é menor.";
+                    } else { 
+                        document.getElementById("resultado").innerHTML = `Fim de jogo! Suas ${numeroDeTetativas} chances acabaram. O número correto era: ${numeroDoSorteio}.`;
+                        document.getElementById("chute").disabled = true; // Desativa o campo de chute após atingir o numero de tentativas
+                    }
+                }
+            
+            //Fim de jogo
+            } else if (numeroDaRodada > numeroDeTetativas) { //Mensagem de fim de jogo!
+                document.getElementById("resultado").innerHTML = `Fim de jogo! Suas ${numeroDeTetativas} chances acabaram. O número correto era: ${numeroDoSorteio}.`;
+                document.getElementById("chute").disabled = true; // Desativa o campo de chute após atingir o numero de tentativas
+            }
+             
+            numeroDaRodada++;
+        } 
+    </script>
+</body>
+</html>
